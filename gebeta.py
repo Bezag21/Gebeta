@@ -2,10 +2,9 @@
 import pygame
 import numpy as np
 
-# Initialize Pygame
 pygame.init()
 
-# Define colors to use in the code
+
 BLACK = (0, 0, 0)
 WOODEN = (50, 20, 0, 128)
 WHITE = (255, 255, 255)
@@ -14,19 +13,18 @@ BROWN = (160, 82, 45)
 LIGHT_BROWN = (205, 133, 63)
 STONE_COLOR = (255, 255, 255)
 
-# Set the window size, W and H
+
 WINDOW_SIZE = (1000, 640)
 
-# Create the game window
+
 screen = pygame.display.set_mode(WINDOW_SIZE)
 
-# Set the title of the window
+
 pygame.display.set_caption("GEBETA_GAME")
 
-# Set the font
+
 font = pygame.font.Font(None, 30)
 
-# Define the board dimensions and position
 BOARD_WIDTH = 840
 BOARD_HEIGHT = 380
 
@@ -40,7 +38,7 @@ BOARD_Y = (WINDOW_SIZE[1] - BOARD_HEIGHT) // 2
 PIT_WIDTH = BOARD_WIDTH // 7
 PIT_HEIGHT = BOARD_HEIGHT // 2
 
-# Define the board layout as array
+
 board = np.array([[4, 4, 4, 4, 4, 4, 0],
                   [4, 4, 4, 4, 4, 4, 0]])
 
@@ -49,18 +47,18 @@ current_player = 0
 current_turn = 0
 
 PADDING_X = (WINDOW_SIZE[0] - BOARD_WIDTH) // 4  # Adjust the padding value
-# Define the colors for player indicators
+
 PLAYER1_COLOR = (255, 0, 0)  # Red
 PLAYER2_COLOR = (0, 0, 255)  # Blue
 
 
 def draw_board():
-    # Draw the board background with wooden texture
+ 
     pygame.draw.rect(screen, BROWN, (BOARD_X, BOARD_Y, BOARD_WIDTH, BOARD_HEIGHT), border_radius=30)
     pygame.draw.rect(screen, LIGHT_BROWN, (BOARD_X + 10, BOARD_Y + 10, BOARD_WIDTH - 20, BOARD_HEIGHT - 20),
                      border_radius=20)
 
-    # Draw the player indicator
+    
     player_indicator_x = BOARD_X - 30  # Adjust the position of the player indicator
     player_indicator_y = BOARD_Y + BOARD_HEIGHT // 2 - 10
 
@@ -77,7 +75,7 @@ def draw_board():
 
     for i in range(2):
         for j in range(7):
-            # Calculate the coordinates for pits and stone stores
+           
             pit_x = BOARD_X + j * PIT_WIDTH
             pit_y = BOARD_Y + i * PIT_HEIGHT
             store_x = BOARD_X + j * PIT_WIDTH  # Calculate the x-coordinate for stone stores
@@ -195,7 +193,7 @@ def update_board(selected_pit):
     else:
         current_turn += 1
 
-    # Check if the game is over
+    
     if is_game_over():
         draw_board()  # Display the final board state
         pygame.display.flip()
@@ -214,13 +212,13 @@ def is_game_over():
     return False
 
 
-# Define the main game loop
+
 running = True
 selected_pit = None
 
 
 while running:
-    # Handle events
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -238,19 +236,18 @@ while running:
                 # Check if it is the current player's pit
                 if current_player == 0 and y <= BOARD_Y + PIT_HEIGHT or current_player == 1 and y >= BOARD_Y + PIT_HEIGHT:
                     if selected_pit == 6:
-                        continue  # Skip if stone store is clicked
+                        continue  
                     update_board(selected_pit)
 
         elif event.type == pygame.MOUSEMOTION:
             pass
 
-    # Clear the screen
+  
     screen.fill(BLACK)
 
-    # Draw the board
     draw_board()
 
-    # Update the display
+    
     pygame.display.flip()
-# Quit the game
+
 pygame.quit()
